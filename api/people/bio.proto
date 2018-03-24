@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package people;
+
+import "api/core/basic.proto";
+
+service Bio { rpc GetName(core.Info) returns (Name); }
+
+message Name { string value = 1; }

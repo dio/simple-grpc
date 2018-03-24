@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package greeter;
+
+import "api/core/basic.proto";
+
+import "api/people/address.proto";
+import "api/people/bio.proto";
+
+service Greeter { rpc Say(Hello) returns (Reply); }
+
+message Hello { core.Info query = 1; }
+
+message Reply {
+  people.Name name = 1;
+  people.PrimaryAddress primary_address = 2;
+}

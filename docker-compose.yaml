@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  plain.front:
+    build: envoy/front/plain
+    ports:
+      - 8000:8000
+    depends_on:
+      - api
+    networks:
+      - internal
+      - external
+
+  greeter:
+    build: services/hello
+    ports:
+      - 5001:5001
+    depends_on:
+      - api
+    networks:
+      - internal
+
+  internal:
+    build: envoy/internal
+    ports:
+      - 10000:10000
+    networks:
+      - internal
+
+  address.internal:
+    build: services/address
+    ports:
+      - 3001:3001
+    depends_on:
+      - api
+    networks:
+      - internal
+
+  bio.internal:
+    build: services/bio
+    ports:
+      - 3002:3002
+    depends_on:
+      - api
+    networks:
+      - internal
+
+  client:
+    build: client
+    depends_on:
+      - api
+    networks:
+      - internal
+      - external
+
+  api:
+    build: api
+    image: grpc_sample_api_build:latest
+
+networks:
+  external:
+  internal:
