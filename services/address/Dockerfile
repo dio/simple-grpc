@@ -1,4 +1,4 @@
-FROM grpc_sample_api_build:latest AS build
+FROM sample_api:latest AS build
 COPY . /go/src/address/
 WORKDIR /go/src/address
 RUN CGO_ENABLED=0 go build -o /go/bin/address main.go

@@ -31,3 +31,9 @@ static_resources:
     lb_policy: ROUND_ROBIN
     http2_protocol_options: { }
     hosts: [{ socket_address: { address: greeter, port_value: 5001 }}]
+    health_checks:
+      - timeout: 25s
+        interval: 1s
+        unhealthy_threshold: 1
+        healthy_threshold: 1
+        grpc_health_check: { }

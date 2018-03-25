@@ -22,12 +22,12 @@ func main() {
 	client := greeter.NewGreeterClient(conn)
 
 	resp, err := client.Say(context.Background(), &greeter.Hello{Query: &core.Info{
-		Name: "OK",
+		Name: "foo",
 	}})
 
 	if err != nil {
 		log.Fatalf("fail to say: %v", err)
 	}
-	println(resp.Name.Value)
-	println(resp.PrimaryAddress.Value)
+	println("name: ", resp.Name.Value)
+	println("address: ", resp.PrimaryAddress.Value)
 }

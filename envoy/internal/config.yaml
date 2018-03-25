@@ -34,9 +34,21 @@ static_resources:
     lb_policy: ROUND_ROBIN
     http2_protocol_options: { }
     hosts: [{ socket_address: { address: address.internal, port_value: 3001 }}]
+    health_checks:
+      - timeout: 25s
+        interval: 1s
+        unhealthy_threshold: 1
+        healthy_threshold: 1
+        grpc_health_check: { }
   - name: service_bio
     connect_timeout: 25s
     type: LOGICAL_DNS
     lb_policy: ROUND_ROBIN
     http2_protocol_options: { }
     hosts: [{ socket_address: { address: bio.internal, port_value: 3002 }}]
+    health_checks:
+      - timeout: 25s
+        interval: 1s
+        unhealthy_threshold: 1
+        healthy_threshold: 1
+        grpc_health_check: { }

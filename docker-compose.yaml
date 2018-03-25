@@ -1,5 +1,6 @@
 version: '3'
 
+# TODO(dio): use `expose` instead of `ports` for following services.
 services:
   plain.front:
     build: envoy/front/plain
@@ -7,6 +8,18 @@ services:
       - 8000:8000
     depends_on:
       - api
+    networks:
+      - internal
+      - external
+
+  secure.front:
+    build: envoy/front/secure
+    image: sample_secure_front:latest
+    ports:
+      - 8001:8001
+    depends_on:
+      - api
+      - cert
     networks:
       - internal
       - external
@@ -49,13 +62,18 @@ services:
     build: client
     depends_on:
       - api
+      - cert
     networks:
       - internal
       - external
 
   api:
     build: api
-    image: grpc_sample_api_build:latest
+    image: sample_api:latest
+
+  cert:
+    build: cert
+    image: sample_cert:latest
 
 networks:
   external:

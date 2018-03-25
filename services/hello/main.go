@@ -11,6 +11,8 @@ import (
 	"hello/service"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 )
 
 const (
@@ -52,6 +54,10 @@ func main() {
 	greeter.RegisterGreeterServer(s, &server{
 		endpoint: endpoint,
 	})
+
+	hs := health.NewServer()
+	hs.SetServingStatus("grpc.health.v1.hello", 1)
+	healthpb.RegisterHealthServer(s, hs)
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
