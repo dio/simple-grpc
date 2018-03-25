@@ -16,7 +16,6 @@ const (
 
 func main() {
 	creds, _ := credentials.NewClientTLSFromFile("/data/cert/pem/crt.pem", "hello")
-	println(creds)
 	conn, err := grpc.Dial(address, grpc.WithTransportCredentials(creds))
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
